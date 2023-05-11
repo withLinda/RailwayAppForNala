@@ -6,9 +6,6 @@ app = Dash(__name__)
 server = app.server
 
 dtable = dash_table.DataTable(
-    style_data={
-        'whiteSpace': 'normal',
-    },
     data=df.to_dict('records'),
     columns=[{'id': x, 'name': x, 'presentation': 'markdown'} if x == 'upworkUrl' else {'id': x, 'name': x} for x in
              df.columns],
@@ -25,12 +22,32 @@ dtable = dash_table.DataTable(
     #     {'id' : 'upworkUrl', 'name' : 'Upwork Url', 'presentation' : 'markdown'}
     # ],
     style_cell={'textAlign': 'left'},
-    style_header={'backgroundColor': '#F88379', 'color': 'black', 'fontWeight': 'bold', 'textAlign': 'center',
+    style_header={'backgroundColor': 'black', 'color': 'white', 'fontWeight': 'bold', 'textAlign': 'center',
                   'border': '1px solid black'},
     filter_action="native",
     style_table={"overflowX": "auto"},
     sort_action="native",
-    sort_mode="multi"
+    sort_mode="multi",
+    row_deletable=True,
+    style_data={
+        'whiteSpace': 'normal',
+        'backgroundColor': 'rgb(30, 30, 30)',
+        'color': 'white'
+    },
+    style_data_conditional=[
+        {
+            'if': {'row_index': 'odd'},
+            'backgroundColor': '#393E46',
+            'color': 'white'
+        },
+        {
+            "if": {"state": "selected"},
+            "backgroundColor": "white",
+            'color': 'black'
+            # "border": "inherit !important",
+        }
+    ],
+
 )
 download_button = html.Button("Download Filtered CSV", style={"marginTop": 20})
 download_component = dcc.Download()
