@@ -1,7 +1,7 @@
 import pandas as pd
 from dash import Dash, dash_table, dcc, html, Input, Output, State
 
-df = pd.read_csv('profile_data1.csv')  # Read the csv file
+df = pd.read_csv('profile_data2.csv')  # Read the csv file
 app = Dash(__name__,
            meta_tags=[{'name': 'viewport',
                        'content': 'width=device-width, initial-scale=1.0'}]
@@ -35,7 +35,7 @@ dtable = dash_table.DataTable(  # Create the table
                 "padding": "10px",
                 "borderRadius": "10px",
                 "border": "thin solid #FFFFFF"},  # Set the style of the cells
-    style_header={'backgroundColor': '#FDF5E6', 'color': '#1A2E43', 'fontWeight': 'bold', 'textAlign': 'center',
+    style_header={'backgroundColor': '#FDF5E6', 'color': '#800000', 'fontWeight': 'bold', 'textAlign': 'center',
                   'border': '1px solid black', "font-family": "Calibri" },  # Set the style of the header
     filter_action="native",  # Set the filter action
     # style_table={"overflowX": "auto"},      # Set the style of the table
@@ -56,7 +56,7 @@ dtable = dash_table.DataTable(  # Create the table
         {
             "if": {"state": "selected"},  # Set the style of the selected rows
             'backgroundColor': '#FDF5E6',
-            'color': '#333333'
+            'color': '#800000'
             # "border": "inherit !important",
         }
     ],
