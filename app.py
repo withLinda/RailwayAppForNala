@@ -8,6 +8,35 @@ app = Dash(__name__,
            )
 server = app.server
 
+darkBlue_theme = {
+    'background': '#14293a',
+    'text': '#FFFFFF',
+    'border': 'thin solid #14293a'
+}
+
+oddDarkBlue_theme = {
+    'background': '#1D3B53',
+    'text': '#FFFFFF',
+    'border': 'thin solid #1D3B53'
+
+}
+
+creamBlack_theme = {
+    'background': '#FDF5E6',
+    'text': '#000000'
+}
+
+font_theme = {
+    "font-family": "Calibri"
+}
+
+dusk_theme = {
+    'background': '#A74848',
+    'text': '#FFFFFF',
+    'border': 'thin solid #A74848'
+
+}
+
 dtable = dash_table.DataTable(  # Create the table
     data=df.to_dict('records'),
     columns=[{'id': x, 'name': x, 'presentation': 'markdown'} if x == 'upworkUrl' else {'id': x, 'name': x} for x in
@@ -25,18 +54,22 @@ dtable = dash_table.DataTable(  # Create the table
     #     {'id' : 'upworkUrl', 'name' : 'Upwork Url', 'presentation' : 'markdown'}
     # ],
     style_cell={'textAlign': 'left',
-                "backgroundColor": "#FDF5E6",
-                "color": "#7FDBFF",
+                "backgroundColor": creamBlack_theme['background'],
+                "color": creamBlack_theme['text'],
                 "fontSize": 12,
                 # "font-family": "helvetica",
                 # "font-family": "sans-serif",
-                "font-family": "Calibri",
+                "font-family": font_theme['font-family'],
                 # 'fontFamily': 'Open Sans',
                 "padding": "10px",
                 "borderRadius": "10px",
                 "border": "thin solid #FFFFFF"},  # Set the style of the cells
-    style_header={'backgroundColor': '#FDF5E6', 'color': '#800000', 'fontWeight': 'bold', 'textAlign': 'center',
-                  'border': '1px solid black', "font-family": "Calibri" },  # Set the style of the header
+    style_header={'backgroundColor': dusk_theme['background'],
+                  'color': dusk_theme['text'],
+                  'fontWeight': 'bold',
+                  'textAlign': 'center',
+                  'border': dusk_theme['border'],
+                  "font-family": font_theme['font-family']},  # Set the style of the header
     filter_action="native",  # Set the filter action
     # style_table={"overflowX": "auto"},      # Set the style of the table
     sort_action="native",  # Set the sort action
@@ -44,19 +77,21 @@ dtable = dash_table.DataTable(  # Create the table
     row_deletable=True,
     style_data={  # Set the style of the data
         'whiteSpace': 'normal',
-        'backgroundColor': '#1A2E43',
-        'color': '#7FDBFF'
+        'backgroundColor': darkBlue_theme['background'],
+        'color': darkBlue_theme['text'],
+        'border': darkBlue_theme['border'],
     },
     style_data_conditional=[  # Set the style of the data conditionally
         {
             'if': {'row_index': 'odd'},  # Set the style of the odd rows
-            'backgroundColor': 'rgb(0, 51, 77)',
-            'color': '#7FDBFF'
+            'backgroundColor': oddDarkBlue_theme['background'],
+            'color': oddDarkBlue_theme['text'],
+            'border': oddDarkBlue_theme['border']
         },
         {
             "if": {"state": "selected"},  # Set the style of the selected rows
-            'backgroundColor': '#FDF5E6',
-            'color': '#800000'
+            'backgroundColor': dusk_theme['background'],
+            'color': dusk_theme['text']
             # "border": "inherit !important",
         }
     ],
@@ -66,16 +101,16 @@ dtable = dash_table.DataTable(  # Create the table
 download_button = html.Button("Download Filtered CSV",
                               style={'font-size': '12px',
                                      'fontweight': 'bold',
-                                     'color': '#7FDBFF',
+                                     'color': darkBlue_theme['text'],
                                      'width': '160px',
                                      'display': 'inline-block',
-                                     'margin-bottom': '10px',#1A2E43
+                                     'margin-bottom': '10px',  # 1A2E43
                                      "font-family": "Calibri",
                                      'margin-right': '5px',
                                      'height': '37px',
                                      'border': "thin solid #1A2E43",
                                      'borderRadius': '10px',
-                                     'backgroundColor': 'rgb(0, 51, 77)',
+                                     'backgroundColor': darkBlue_theme['background'],
                                      'verticalAlign': 'top'})
 download_component = dcc.Download()
 
