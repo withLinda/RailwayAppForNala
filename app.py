@@ -1,11 +1,40 @@
 import pandas as pd
 from dash import Dash, dash_table, dcc, html, Input, Output, State
-
 df = pd.read_csv('profile_data2.csv')  # Read the csv file
-app = Dash(__name__,
-           meta_tags=[{'name': 'viewport',
-                       'content': 'width=device-width, initial-scale=1.0'}]
-           )
+
+
+class CustomDash(Dash):
+    def interpolate_index(self, **kwargs):
+        # Inspect the arguments by printing them
+        print(kwargs)
+        return '''
+        <!DOCTYPE html>
+        <html>
+            <head>
+                <script async src="https://analytics.umami.is/script.js" data-website-id="39feeba5-7f9e-474d-b1bd-9e6d088b0e31"></script>
+                <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+                <meta charset="utf-8">
+                <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                <meta name="viewport" content="width=device-width,  initial-scale=1">
+                <title>For you..</title>
+            </head>
+            <body>
+
+                <div id="custom-header"></div>
+                {app_entry}
+                {config}
+                {scripts}
+                {renderer}
+                <div id="custom-footer"></div>
+            </body>
+        </html>
+        '''.format(
+            app_entry=kwargs['app_entry'],
+            config=kwargs['config'],
+            scripts=kwargs['scripts'],
+            renderer=kwargs['renderer'])
+
+app = CustomDash()
 server = app.server
 
 darkBlue_theme = {
@@ -23,7 +52,8 @@ oddDarkBlue_theme = {
 
 creamBlack_theme = {
     'background': '#FDF5E6',
-    'text': '#000000'
+    'text': '#000000',
+    'border': 'thin solid #FDF5E6'
 }
 
 font_theme = {
@@ -63,7 +93,7 @@ dtable = dash_table.DataTable(  # Create the table
                 # 'fontFamily': 'Open Sans',
                 "padding": "10px",
                 "borderRadius": "10px",
-                "border": "thin solid #FFFFFF"},  # Set the style of the cells
+                "border": creamBlack_theme['border']},  # Set the style of the cells
     style_header={'backgroundColor': dusk_theme['background'],
                   'color': dusk_theme['text'],
                   'fontWeight': 'bold',
@@ -114,25 +144,14 @@ download_button = html.Button("Download Filtered CSV",
                                      'verticalAlign': 'top'})
 download_component = dcc.Download()
 
-app.layout = html.Div(
+
+app.layout =  html.Div(
     [
         download_component,
         download_button,
         dtable,
     ]
 )
-
-
-@app.callback(
-    Output(download_component, "data"),
-    Input(download_button, "n_clicks"),
-    State(dtable, "derived_virtual_data"),
-    prevent_initial_call=True,
-)
-def download_data(n_clicks, data):
-    dff = pd.DataFrame(data)
-    return dcc.send_data_frame(dff.to_csv, "filtered_csv.csv")
-
 
 if __name__ == '__main__':
     app.run_server(debug=True)
