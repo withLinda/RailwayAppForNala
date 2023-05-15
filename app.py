@@ -45,7 +45,7 @@ class CustomDash(Dash):
         <!DOCTYPE html>
         <html>
             <head>
-<! –– <script async src="https://analytics.umami.is/script.js" data-website-id="39feeba5-7f9e-474d-b1bd-9e6d088b0e31"></script> ––>
+                <script async src="https://analytics.umami.is/script.js" data-website-id="39feeba5-7f9e-474d-b1bd-9e6d088b0e31"></script>
                 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
                 <meta charset="utf-8">
                 <meta http-equiv="X-UA-Compatible" content="IE=edge">
